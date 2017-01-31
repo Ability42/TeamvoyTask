@@ -6,13 +6,16 @@
 //  Copyright © 2017 Stepan Paholyk. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
+#import "ViewController.h"
+#import "TTServerManager.h"
 
 @class TTAccessToken;
 
 typedef void(^TTLoginCompletionBlock)(TTAccessToken* token);
 
-@interface TTLoginViewController : NSObject
+@interface TTLoginViewController : ViewController
 
 - (id) initWithCompletionBlock:(TTLoginCompletionBlock) completionBlock;
 

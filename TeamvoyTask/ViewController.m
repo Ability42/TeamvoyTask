@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "TTServerManager.h"
 
 @interface ViewController ()
+
 
 @end
 
@@ -17,12 +19,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    TTServerManager *manager = [TTServerManager sharedManager];
+    [manager authorizeUser:^(TTUser *user) {
+        NSLog(@"hello user");
+    }];
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+
 }
 
 

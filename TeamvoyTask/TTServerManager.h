@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TTLoginViewController.h"
 #import "TTUser.h"
+#import "TTAccessToken.h"
 
 @interface TTServerManager : NSObject
 
 @property (nonatomic, strong, readonly) TTUser *currentUser;
+@property (nonatomic, strong) TTAccessToken *accesToken;
 
 + (TTServerManager*) sharedManager;
 
