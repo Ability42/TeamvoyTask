@@ -13,6 +13,12 @@
 
 @property (nonatomic, strong, readonly) TTUser *currentUser;
 
++ (TTServerManager*) sharedManager;
+
 - (void) authorizeUser:(void(^)(TTUser* user)) compleion;
+- (void) getPhotosFromServerWithOffset:(NSInteger)offset
+                                count:(NSInteger)count
+                             onSucces:(void (^)(NSArray *))success
+                            onFailure:(void (^)(NSError *))failure;
 
 @end
