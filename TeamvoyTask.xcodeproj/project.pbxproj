@@ -20,6 +20,7 @@
 		7856D5141E40DB9B00614805 /* TTServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5131E40DB9B00614805 /* TTServerManager.m */; };
 		7856D5171E40DCDA00614805 /* TTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5161E40DCDA00614805 /* TTUser.m */; };
 		7856D51A1E40DD8000614805 /* TTAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5191E40DD8000614805 /* TTAccessToken.m */; };
+		7856D51D1E40DF5200614805 /* TTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D51C1E40DF5200614805 /* TTLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,8 @@
 		7856D5161E40DCDA00614805 /* TTUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTUser.m; sourceTree = "<group>"; };
 		7856D5181E40DD8000614805 /* TTAccessToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAccessToken.h; sourceTree = "<group>"; };
 		7856D5191E40DD8000614805 /* TTAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAccessToken.m; sourceTree = "<group>"; };
+		7856D51B1E40DF5200614805 /* TTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTLoginViewController.h; sourceTree = "<group>"; };
+		7856D51C1E40DF5200614805 /* TTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTLoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,8 @@
 				7856D4D51E40A10000614805 /* AppDelegate.m */,
 				7856D4D71E40A10000614805 /* ViewController.h */,
 				7856D4D81E40A10000614805 /* ViewController.m */,
+				7856D51B1E40DF5200614805 /* TTLoginViewController.h */,
+				7856D51C1E40DF5200614805 /* TTLoginViewController.m */,
 				7856D5181E40DD8000614805 /* TTAccessToken.h */,
 				7856D5191E40DD8000614805 /* TTAccessToken.m */,
 				7856D5121E40DB9B00614805 /* TTServerManager.h */,
@@ -242,7 +247,6 @@
 				TargetAttributes = {
 					7856D4CD1E40A0FF00614805 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = ZW9JWEU2NM;
 						ProvisioningStyle = Automatic;
 					};
 					7856D4E61E40A10000614805 = {
@@ -313,6 +317,7 @@
 			files = (
 				7856D4D91E40A10000614805 /* ViewController.m in Sources */,
 				7856D51A1E40DD8000614805 /* TTAccessToken.m in Sources */,
+				7856D51D1E40DF5200614805 /* TTLoginViewController.m in Sources */,
 				7856D4D61E40A10000614805 /* AppDelegate.m in Sources */,
 				7856D5141E40DB9B00614805 /* TTServerManager.m in Sources */,
 				7856D4D31E40A10000614805 /* main.m in Sources */,
@@ -463,7 +468,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZW9JWEU2NM;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -479,7 +484,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ZW9JWEU2NM;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

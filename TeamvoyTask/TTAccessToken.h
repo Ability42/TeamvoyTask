@@ -12,5 +12,5 @@
 
 @property (strong, nonatomic) NSString* token;
 @property (strong, nonatomic) NSDate* expirationDate;
-
+@property (strong, nonatomic) NSString* userID;
 @end
