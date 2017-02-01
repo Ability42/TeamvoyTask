@@ -10,4 +10,9 @@
 
 @interface TTUser : NSObject
 
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+ 
+- (id)initWithServerResponse:(NSDictionary *)response;
+
 @end

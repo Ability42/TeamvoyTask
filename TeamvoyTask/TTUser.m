@@ -10,4 +10,15 @@
 
 @implementation TTUser
 
+- (id)initWithServerResponse:(NSDictionary *)response
+{
+    self = [super init];
+    if (self) {
+        self.firstName = [response objectForKey:@"first_name"];
+        self.lastName = [response objectForKey:@"last_name"];
+        
+    }
+    return self;
+}
+
 @end

@@ -22,7 +22,7 @@
     TTServerManager *manager = [TTServerManager sharedManager];
     [manager authorizeUser:^(TTUser *user) {
         NSLog(@"hello user");
-    }];
+    }]; 
 }
 
 
