@@ -9,9 +9,10 @@
 #import "TTLoginViewController.h"
 #import "TTServerManager.h"
 
-@interface TTLoginViewController () <UIWebViewDelegate>
+@interface TTLoginViewController () <UIWebViewDelegate, NSURLSessionDelegate>
 @property (copy, nonatomic) TTLoginCompletionBlock completionBlock;
 @property (weak, nonatomic) UIWebView *webView;
+
 @end
 
 @implementation TTLoginViewController
@@ -48,8 +49,8 @@
     [self.navigationItem setRightBarButtonItem:doneItem];
     
     
-    /*** Create ***/
-    
+    /*** Create request for auth code***/
+
     
     NSString *urlString = [NSString stringWithFormat:@"https://unsplash.com/oauth/authorize?"
                            "client_id=750e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def"
@@ -58,14 +59,27 @@
                            "&scope=read_user"];
     
     NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request= [NSURLRequest requestWithURL:url];
-    [webView loadRequest:request];
     
+    
+    NSURLRequest *request= [NSURLRequest requestWithURL:url];
+    NSURLSession *mainSession = [NSURLSession sharedSession];
+    NSURLSessionDataTask *sessionDatatask = [mainSession dataTaskWithRequest:request
+                                                           completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                               
+                                                           }];
+    [sessionDatatask resume];
 
     
     
     
     
+    
+    
+    
+    [webView loadRequest:request];
+    // if code succesfully retrieved --> exchange on token
+    
+
     
 }
 
@@ -110,8 +124,46 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSLog(@"%@", [request URL]);
 
-
+    
     return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+/*
+    NSURL *redirectedURL = [webView.request mainDocumentURL];
+    NSData *dataWithUrl = [[NSData alloc] initWithContentsOfURL:redirectedURL];
+ 
+    NSString *stringWithURL = [[NSString alloc] initWithData:dataWithUrl
+                                                    encoding:NSUTF32StringEncoding];
+    NSLog(@"REDIRECTED URL:\t %@", stringWithURL);
+*/
+    
+    NSURL *url = [webView.request mainDocumentURL];
+    NSLog(@"The Redirected URL is: %@", url);
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    //NSCachedURLResponse *resp = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
+    //NSLog(@"%@",[(NSHTTPURLResponse*)resp.response allHeaderFields]);
+    
+}
+
+#pragma mark - NSURLSessionTaskDelegate
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data{
+
+    
+}
+
+
+
+#pragma mark - NSURLSessionDelegate
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response
+        newRequest:(NSURLRequest *)request
+ completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
+    
 }
 
 

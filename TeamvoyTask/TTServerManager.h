@@ -19,6 +19,7 @@
 + (TTServerManager*) sharedManager;
 
 - (void) authorizeUser:(void(^)(TTUser* user)) completion;
+- (void) requestToURL:(NSString*)url withMethodName:(NSString*)methodName andParams:(NSDictionary*)params;
 - (void) getPhotosFromServerWithOffset:(NSInteger)offset
                                 count:(NSInteger)count
                              onSucces:(void (^)(NSArray *))success

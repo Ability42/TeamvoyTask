@@ -11,8 +11,13 @@
 
 @interface TTServerManager ()
 
-@property (strong, nonatomic) TTAccessToken *accessToken;
+@property (weak, nonatomic) TTAccessToken *accessToken;
 @property (strong, nonatomic) AFHTTPSessionManager *requestManager;
+
+
+/** URL Session **/
+@property (strong, nonatomic) NSString *requestReply;
+
 
 @end
 
@@ -65,47 +70,62 @@
     
     */
     
-    
-    /*** Prepare Private Requests ***/
-
-    /*
     NSString *strWithAuthURL = @"https://unsplash.com/oauth/authorize";
-    NSDictionary *dictWithAuthParams = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                        @"a261fa69cad0d4b9a1cc9a39e1a9cd27684cebce34d65a5201e205d16cd2ff55",@"client_id",
-                                        @"teamvoytask://",@"redirect_url",
-                                        @"fcc4fc2e317d99e41581d0a20c4208030ea4b118963b3ee80bea202baada4918",@"response_type",
-                                        @"read_user", @"scope",
-                                        nil];
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"750e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def",@"client_id",
+                            @"https://TeamvoyTask/auth/unsplash/callback", @"redirect_uri",
+                            @"code", @"response_type"
+                            , @"read_user", @"scope", nil];
+
     
-    [manager GET:strWithAuthURL
-      parameters:dictWithAuthParams
-        progress:nil
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-             NSDictionary *responseDict = (NSDictionary*)responseObject;
-             NSLog(@"SUCCES: %@", responseDict);
-         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-             NSLog(@"FAILURE: %@", error.localizedDescription);
-         }];
-    
-    */
-    
-    /*** For public access ***/
-    
-    /*
-    NSString *strWithPublicURL = @"https://api.unsplash.com/photos/?client_id=750e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def";
-    
-    [manager GET:strWithPublicURL
-      parameters:nil
-        progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@", responseObject);
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"%@", error.localizedDescription);
-        }];
-    */
+    [self requestToURL:strWithAuthURL withMethodName:@"GET" andParams:params];
     
 }
+
+//** Make request to specific URL; **//
+//** Useed HTTP Methods like (GET, POST)
+//** If you don't need to pass params --> set "params" value to nil
+// GET RESPONSE DATA
+- (void) requestToURL:(NSString*)url withMethodName:(NSString*)methodName andParams:(NSDictionary*)params {
+    
+    //NSURLComponents *components = [NSURLComponents componentsWithString:params];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+
+    [request setURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:methodName];
+    for (NSString *key in params) {
+        if (!key) {
+            break;
+        } else {
+            [request setValue:[params valueForKey:key] forHTTPHeaderField:key];
+        }
+    }
+
+    
+    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
+    
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                if ([response isKindOfClass:[NSDictionary class]]) {
+                                                    
+                                                    NSError *parseError = nil;
+                                                    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+                                                    NSLog(@"RESPONSE DICTIONARY: %@", responseDictionary);
+                                                    
+                                                } else if([response isKindOfClass:[NSString class]]) {
+                                                    NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                                                    self.requestReply = requestReply;
+                                                    NSLog(@"requestReply: %@", requestReply);
+                                                }
+
+                                            }];
+    
+    [task resume];
+
+}
+
 
 
 - (void) getPhotosFromServerWithOffset:(NSInteger)offset

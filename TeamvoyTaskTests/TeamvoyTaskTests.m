@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "TTServerManager.h"
 
 @interface TeamvoyTaskTests : XCTestCase
 
@@ -27,6 +28,29 @@
 - (void)testExample {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    TTServerManager *manager = [TTServerManager sharedManager];
+    //[manager authorizeUser:nil];
+    
+    NSString *strWithAuthURL = @"https://unsplash.com/oauth/authorize";
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://unsplash.com/oauth/authorize?"
+                           "client_id=750e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def"
+                           "&redirect_uri=https://TeamvoyTask/auth/unsplash/callback"
+                           "&response_type=code"
+                           "&scope=read_user"];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"750e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def",@"client_id",
+                            @"https://TeamvoyTask/auth/unsplash/callback", @"redirect_uri",
+                            @"code", @"response_type", @"read_user",
+                            @"scope", nil];
+    
+    
+    ;
+    
+    [manager requestToURL:strWithAuthURL withMethodName:@"GET" andParams:params];
+    
+    
 }
 
 - (void)testPerformanceExample {
