@@ -9,14 +9,13 @@
 #import "TTServerManager.h"
 #import <AFNetworking/AFNetworking.h>
 
-@interface TTServerManager ()
+@interface TTServerManager () <NSURLSessionDelegate>
 
 @property (weak, nonatomic) TTAccessToken *accessToken;
 @property (strong, nonatomic) AFHTTPSessionManager *requestManager;
 
-
 /** URL Session **/
-@property (strong, nonatomic) NSString *requestReply;
+
 
 
 @end
@@ -59,88 +58,59 @@
             completion(nil);
         }
     }];
+    
+    UINavigationController *navController =  [[UINavigationController alloc] initWithRootViewController:loginVC];
+    UIViewController *mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+    
+    [mainVC presentViewController:navController
+                         animated:YES
+                       completion:nil];
+    
+    
+    
+    static NSString *requesMethod = @"GET";
+    
+    /**** Create distinct session manager for manage request ****/
+    // AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    
+    /**** HTTP_DATA ****/
+    NSString *urlString = [NSString stringWithFormat:@"https://unsplash.com/oauth/authorize?"];
+    // NSString *urlString = @"https://unsplash.com/oauth/authorize/";
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"750e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def",@"client_id",
+                            @"https://TeamvoyTask/auth/unsplash/callback", @"redirect_uri",
+                            @"code", @"response_type", @"read_user",
+                            @"scope", nil];
+    
+    /**** AFNetworkin uses ****/
+
+    /**** Redirection block (get callback code --> catch url request with accessToken)****/
+    
+    AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:urlString]];
+    
+    
     /*
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    UIViewController *mainVC = window.rootViewController;
-    
-    
-    [mainVC presentViewController:navController animated:YES completion:nil];
+    [sessionManager setTaskWillPerformHTTPRedirectionBlock:^NSURLRequest * _Nonnull(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLResponse * _Nonnull response, NSURLRequest * _Nonnull request) {
+        // This will be called if the URL redirects
+        NSLog(@"%@", request.URL);
+        return request;
+    }];
+    */
+    /*
+    [sessionManager GET:urlString
+             parameters:params
+               progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                   NSDictionary *dict = (NSDictionary*)responseObject;
+                   NSLog(@"Response: %@", dict);
+               } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                   NSLog(@"Error: %@", error);
+               }];
     
     */
     
-    NSString *strWithAuthURL = @"https://unsplash.com/oauth/authorize";
-    
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"750e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def",@"client_id",
-                            @"https://TeamvoyTask/auth/unsplash/callback", @"redirect_uri",
-                            @"code", @"response_type"
-                            , @"read_user", @"scope", nil];
-
-    
-    [self requestToURL:strWithAuthURL withMethodName:@"GET" andParams:params];
-    
 }
 
-//** Make request to specific URL; **//
-//** Useed HTTP Methods like (GET, POST)
-//** If you don't need to pass params --> set "params" value to nil
-// GET RESPONSE DATA
-- (void) requestToURL:(NSString*)url withMethodName:(NSString*)methodName andParams:(NSDictionary*)params {
-    
-    //NSURLComponents *components = [NSURLComponents componentsWithString:params];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-
-    [request setURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:methodName];
-    for (NSString *key in params) {
-        if (!key) {
-            break;
-        } else {
-            [request setValue:[params valueForKey:key] forHTTPHeaderField:key];
-        }
-    }
-
-    
-    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
-    
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                                                if ([response isKindOfClass:[NSDictionary class]]) {
-                                                    
-                                                    NSError *parseError = nil;
-                                                    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
-                                                    NSLog(@"RESPONSE DICTIONARY: %@", responseDictionary);
-                                                    
-                                                } else if([response isKindOfClass:[NSString class]]) {
-                                                    NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-                                                    self.requestReply = requestReply;
-                                                    NSLog(@"requestReply: %@", requestReply);
-                                                }
-
-                                            }];
-    
-    [task resume];
-
-}
+#pragma mark - NSURLSessionDelegate
 
 
-
-- (void) getPhotosFromServerWithOffset:(NSInteger)offset
-                                count:(NSInteger)count
-                             onSucces:(void (^)(NSArray *))success
-                            onFailure:(void (^)(NSError *))failure {
-    
-
-    
-    //AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    //NSDictionary *params
-    //NSString *urlString
-
-    
-}
 
 @end

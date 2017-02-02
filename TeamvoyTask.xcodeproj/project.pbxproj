@@ -21,6 +21,9 @@
 		7856D5171E40DCDA00614805 /* TTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5161E40DCDA00614805 /* TTUser.m */; };
 		7856D51A1E40DD8000614805 /* TTAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5191E40DD8000614805 /* TTAccessToken.m */; };
 		7856D5201E41F25B00614805 /* TTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D51F1E41F25B00614805 /* TTLoginViewController.m */; };
+		7856D5281E43D17600614805 /* AFHTTPRequestSerializer+OAuth2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5231E43D17500614805 /* AFHTTPRequestSerializer+OAuth2.m */; };
+		7856D5291E43D17600614805 /* AFOAuth2Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5251E43D17500614805 /* AFOAuth2Manager.m */; };
+		7856D52A1E43D17600614805 /* AFOAuthCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5271E43D17500614805 /* AFOAuthCredential.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +74,7 @@
 		7856D4F21E40A10000614805 /* TeamvoyTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamvoyTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7856D4F61E40A10000614805 /* TeamvoyTaskUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamvoyTaskUITests.m; sourceTree = "<group>"; };
 		7856D4F81E40A10000614805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7856D50E1E40DB8D00614805 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = "<group>"; };
+		7856D50E1E40DB8D00614805 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../AFNetworking.framework; sourceTree = "<group>"; };
 		7856D5121E40DB9B00614805 /* TTServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTServerManager.h; sourceTree = "<group>"; };
 		7856D5131E40DB9B00614805 /* TTServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTServerManager.m; sourceTree = "<group>"; };
 		7856D5151E40DCDA00614805 /* TTUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTUser.h; sourceTree = "<group>"; };
@@ -80,6 +83,12 @@
 		7856D5191E40DD8000614805 /* TTAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAccessToken.m; sourceTree = "<group>"; };
 		7856D51E1E41F25B00614805 /* TTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTLoginViewController.h; sourceTree = "<group>"; };
 		7856D51F1E41F25B00614805 /* TTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTLoginViewController.m; sourceTree = "<group>"; };
+		7856D5221E43D17500614805 /* AFHTTPRequestSerializer+OAuth2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestSerializer+OAuth2.h"; sourceTree = "<group>"; };
+		7856D5231E43D17500614805 /* AFHTTPRequestSerializer+OAuth2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestSerializer+OAuth2.m"; sourceTree = "<group>"; };
+		7856D5241E43D17500614805 /* AFOAuth2Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth2Manager.h; sourceTree = "<group>"; };
+		7856D5251E43D17500614805 /* AFOAuth2Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth2Manager.m; sourceTree = "<group>"; };
+		7856D5261E43D17500614805 /* AFOAuthCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuthCredential.h; sourceTree = "<group>"; };
+		7856D5271E43D17500614805 /* AFOAuthCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuthCredential.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +120,6 @@
 		7856D4C51E40A0FF00614805 = {
 			isa = PBXGroup;
 			children = (
-				7856D50E1E40DB8D00614805 /* AFNetworking.framework */,
 				7856D4D01E40A10000614805 /* TeamvoyTask */,
 				7856D4EA1E40A10000614805 /* TeamvoyTaskTests */,
 				7856D4F51E40A10000614805 /* TeamvoyTaskUITests */,
@@ -134,19 +142,8 @@
 			children = (
 				7856D4D41E40A10000614805 /* AppDelegate.h */,
 				7856D4D51E40A10000614805 /* AppDelegate.m */,
-				7856D4D71E40A10000614805 /* ViewController.h */,
-				7856D4D81E40A10000614805 /* ViewController.m */,
-				7856D5181E40DD8000614805 /* TTAccessToken.h */,
-				7856D5191E40DD8000614805 /* TTAccessToken.m */,
-				7856D51E1E41F25B00614805 /* TTLoginViewController.h */,
-				7856D51F1E41F25B00614805 /* TTLoginViewController.m */,
-				7856D5121E40DB9B00614805 /* TTServerManager.h */,
-				7856D5131E40DB9B00614805 /* TTServerManager.m */,
-				7856D5151E40DCDA00614805 /* TTUser.h */,
-				7856D5161E40DCDA00614805 /* TTUser.m */,
-				7856D4DA1E40A10000614805 /* Main.storyboard */,
-				7856D4DD1E40A10000614805 /* Assets.xcassets */,
-				7856D4DF1E40A10000614805 /* LaunchScreen.storyboard */,
+				7856D52C1E43DE1500614805 /* Model */,
+				7856D52B1E43DDF600614805 /* Controller */,
 				7856D4E21E40A10000614805 /* Info.plist */,
 				7856D4D11E40A10000614805 /* Supporting Files */,
 			);
@@ -156,6 +153,11 @@
 		7856D4D11E40A10000614805 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7856D4DD1E40A10000614805 /* Assets.xcassets */,
+				7856D4DA1E40A10000614805 /* Main.storyboard */,
+				7856D4DF1E40A10000614805 /* LaunchScreen.storyboard */,
+				7856D50E1E40DB8D00614805 /* AFNetworking.framework */,
+				7856D5211E43D17500614805 /* AFOAuth2Manager */,
 				7856D4D21E40A10000614805 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -177,6 +179,44 @@
 				7856D4F81E40A10000614805 /* Info.plist */,
 			);
 			path = TeamvoyTaskUITests;
+			sourceTree = "<group>";
+		};
+		7856D5211E43D17500614805 /* AFOAuth2Manager */ = {
+			isa = PBXGroup;
+			children = (
+				7856D5221E43D17500614805 /* AFHTTPRequestSerializer+OAuth2.h */,
+				7856D5231E43D17500614805 /* AFHTTPRequestSerializer+OAuth2.m */,
+				7856D5241E43D17500614805 /* AFOAuth2Manager.h */,
+				7856D5251E43D17500614805 /* AFOAuth2Manager.m */,
+				7856D5261E43D17500614805 /* AFOAuthCredential.h */,
+				7856D5271E43D17500614805 /* AFOAuthCredential.m */,
+			);
+			name = AFOAuth2Manager;
+			path = ../AFOAuth2Manager;
+			sourceTree = "<group>";
+		};
+		7856D52B1E43DDF600614805 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7856D4D71E40A10000614805 /* ViewController.h */,
+				7856D4D81E40A10000614805 /* ViewController.m */,
+				7856D51E1E41F25B00614805 /* TTLoginViewController.h */,
+				7856D51F1E41F25B00614805 /* TTLoginViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		7856D52C1E43DE1500614805 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7856D5151E40DCDA00614805 /* TTUser.h */,
+				7856D5161E40DCDA00614805 /* TTUser.m */,
+				7856D5181E40DD8000614805 /* TTAccessToken.h */,
+				7856D5191E40DD8000614805 /* TTAccessToken.m */,
+				7856D5121E40DB9B00614805 /* TTServerManager.h */,
+				7856D5131E40DB9B00614805 /* TTServerManager.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,6 +361,9 @@
 				7856D4D61E40A10000614805 /* AppDelegate.m in Sources */,
 				7856D5141E40DB9B00614805 /* TTServerManager.m in Sources */,
 				7856D4D31E40A10000614805 /* main.m in Sources */,
+				7856D5281E43D17600614805 /* AFHTTPRequestSerializer+OAuth2.m in Sources */,
+				7856D52A1E43D17600614805 /* AFOAuthCredential.m in Sources */,
+				7856D5291E43D17600614805 /* AFOAuth2Manager.m in Sources */,
 				7856D5171E40DCDA00614805 /* TTUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -565,6 +608,7 @@
 				7856D4FD1E40A10000614805 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7856D4FE1E40A10000614805 /* Build configuration list for PBXNativeTarget "TeamvoyTaskTests" */ = {
 			isa = XCConfigurationList;
@@ -573,6 +617,7 @@
 				7856D5001E40A10000614805 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7856D5011E40A10000614805 /* Build configuration list for PBXNativeTarget "TeamvoyTaskUITests" */ = {
 			isa = XCConfigurationList;
@@ -581,6 +626,7 @@
 				7856D5031E40A10000614805 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

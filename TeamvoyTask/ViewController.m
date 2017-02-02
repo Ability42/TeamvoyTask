@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TTServerManager.h"
+#import "TTLoginViewController.h"
 
 @interface ViewController ()
 
@@ -19,10 +20,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    TTServerManager *manager = [TTServerManager sharedManager];
-    [manager authorizeUser:^(TTUser *user) {
-        NSLog(@"hello user");
-    }]; 
+    
+    // if !logig show Login view Controller
+    
+
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[TTServerManager sharedManager] authorizeUser:^(TTUser *user) {
+            NSLog(@"User authorized");
+        }];
+    });
 }
 
 

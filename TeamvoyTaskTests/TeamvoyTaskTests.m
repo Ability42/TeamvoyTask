@@ -46,10 +46,6 @@
                             @"scope", nil];
     
     
-    ;
-    
-    [manager requestToURL:strWithAuthURL withMethodName:@"GET" andParams:params];
-    
     
 }
 
