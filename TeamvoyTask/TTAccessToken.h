@@ -10,9 +10,9 @@
 
 @interface TTAccessToken : NSObject
 
-@property (strong, nonatomic) NSString* token;
+@property (strong, nonatomic) NSString* tokenCode;
 @property (strong,nonatomic) NSString* tokenType;
-@property (strong,nonatomic) NSString* refreshToken;
+@property (strong,nonatomic) NSString* refreshTokenCode;
 @property (strong, nonatomic) NSString* scope;
 @property (strong, nonatomic) NSDate* expirationDate;
 

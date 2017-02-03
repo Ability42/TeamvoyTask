@@ -9,23 +9,23 @@
 #import <AFNetworking/AFNetworking.h>
 #import "TTLoginViewController.h"
 #import "TTServerManager.h"
-#import "AFOAuth2Manager.h"
+
 
 static NSString * const kUnsplashTokenURI = @"https://unsplash.com/oauth/token";
 static NSString * const kClientID = @"50e67cc319b423955139594aa10fad75123b7ddcea0fc337a84856dca367def";
 static NSString * const kClientSecret = @"3f012ff391636399d07e5f7e101c4a8b4feeb4c68b5aebf1a60c48edad7804c5";
+static NSString * const kHostURL = @"teamvoytask";
 
 
-@interface TTLoginViewController () <UIWebViewDelegate, NSURLSessionDelegate>
+@interface TTLoginViewController () <UIWebViewDelegate>
 
 
 @property (copy, nonatomic) TTLoginCompletionBlock completionBlock;
 @property (weak, nonatomic) UIWebView *webView;
 @property (strong, nonatomic) TTServerManager *serverManager;
 
-@property (strong, nonatomic) NSMutableURLRequest *unsplashURLRequest;
-@property (weak, nonatomic) IBOutlet UIWebView *unsplashWebAPIRequest;
 @property (strong, nonatomic) NSString* callbackCode;
+@property (strong, nonatomic) NSDictionary* tokenParams;
 
 
 
@@ -100,9 +100,8 @@ static NSString * const kClientSecret = @"3f012ff391636399d07e5f7e101c4a8b4feeb4
         [self.webView loadRequest:task.currentRequest];
     }
 }
-
-
 - (void) getAccessToken {
+    [self.webView stopLoading];
     
     NSURLComponents *components = [NSURLComponents componentsWithString:@"https://unsplash.com/oauth/token"];
     
@@ -125,9 +124,38 @@ static NSString * const kClientSecret = @"3f012ff391636399d07e5f7e101c4a8b4feeb4
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                     options:0
+                                                                                                       error:nil];
+                                                
+                                                self.tokenParams = json;
+                                                NSLog(@"Data: %@", json);
+                                                if ([json objectForKey:@"access_token"]) {
+                                                    [self dismissViewControllerAnimated:self completion:nil];
+                                                }
+                                            }];
+    
+    [task resume];
+}
+- (void) createAccessTokenObject {
+    TTAccessToken *accessToken = [[TTAccessToken alloc] init];
+    
+    accessToken.tokenCode = [self.tokenParams objectForKey:@"access_token"];
+    accessToken.refreshTokenCode = [self.tokenParams objectForKey:@"refresh_token"];
+    /*** Pass Completion Block ***/
+    if (self.completionBlock) {
+        self.completionBlock(accessToken);
+    }
+    /*** Kill Web View ***/
+    self.webView = nil;
+    
+    /*** Kill Controller ***/
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 
-    [self.webView loadRequest:task.currentRequest];
+    
 }
 
 - (void) didReceiveMemoryWarning {
@@ -137,7 +165,7 @@ static NSString * const kClientSecret = @"3f012ff391636399d07e5f7e101c4a8b4feeb4
 }
 
 - (void) dealloc {
-    //self.webView.delegate = nil;
+    self.webView.delegate = nil;
 }
 
 #pragma mark - Actions
@@ -162,10 +190,8 @@ static NSString * const kClientSecret = @"3f012ff391636399d07e5f7e101c4a8b4feeb4
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
 
-    
-
-
     if ([[request.URL absoluteString] containsString:@"callback?code="]) {
+        
         NSArray *components = [[request.URL absoluteString] componentsSeparatedByString:@"callback?code="] ;
         NSLog(@"Callback code: %@", [components lastObject]);
         self.callbackCode = [components lastObject];
@@ -175,19 +201,18 @@ static NSString * const kClientSecret = @"3f012ff391636399d07e5f7e101c4a8b4feeb4
         }
     }
     
-   
-    
     return YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-
+    NSLog(@"Finished");
+    NSCachedURLResponse *resp = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
+    NSLog(@"%@",[(NSHTTPURLResponse*)resp.response allHeaderFields]);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    NSLog(@"ERROR LOAD WEB VIEW: %@", error.localizedDescription);
+    NSLog(@"ERROR LOAD WEB VIEW: %@", error.userInfo);
 }
-
 
 
 
