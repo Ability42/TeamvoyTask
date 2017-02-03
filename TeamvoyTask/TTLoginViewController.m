@@ -72,6 +72,12 @@ static NSString * const kHostURL = @"teamvoytask";
     
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    [self createAccessTokenObject];
+}
+
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
     
@@ -100,6 +106,9 @@ static NSString * const kHostURL = @"teamvoytask";
         [self.webView loadRequest:task.currentRequest];
     }
 }
+
+#pragma mark - Auth methods
+
 - (void) getAccessToken {
     [self.webView stopLoading];
     
@@ -149,7 +158,9 @@ static NSString * const kHostURL = @"teamvoytask";
         self.completionBlock(accessToken);
     }
     /*** Kill Web View ***/
+    self.webView.delegate = nil;
     self.webView = nil;
+    
     
     /*** Kill Controller ***/
     [self dismissViewControllerAnimated:YES
@@ -184,7 +195,7 @@ static NSString * const kHostURL = @"teamvoytask";
 
 
 
-#pragma mark - Auth methods
+
 
 #pragma mark - UIWebViewDelegate
 
