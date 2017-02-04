@@ -14,6 +14,6 @@
 @property (strong,nonatomic) NSString* tokenType;
 @property (strong,nonatomic) NSString* refreshTokenCode;
 @property (strong, nonatomic) NSString* scope;
-@property (strong, nonatomic) NSDate* expirationDate;
+
 
 @end
