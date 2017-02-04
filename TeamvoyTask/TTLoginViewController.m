@@ -100,7 +100,7 @@ static NSString * const kHostURL = @"teamvoytask";
         [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [request setHTTPMethod:@"GET"];
         
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request];
         [self.webView loadRequest:task.currentRequest];
@@ -153,6 +153,7 @@ static NSString * const kHostURL = @"teamvoytask";
     
     accessToken.tokenCode = [self.tokenParams objectForKey:@"access_token"];
     accessToken.refreshTokenCode = [self.tokenParams objectForKey:@"refresh_token"];
+    
     /*** Pass Completion Block ***/
     if (self.completionBlock) {
         self.completionBlock(accessToken);
@@ -165,6 +166,11 @@ static NSString * const kHostURL = @"teamvoytask";
     /*** Kill Controller ***/
     [self dismissViewControllerAnimated:YES
                              completion:nil];
+    
+    /*** Save Bearer Token for further requests ***/
+    NSUserDefaults *tokenDefaults = [NSUserDefaults standardUserDefaults];
+    [tokenDefaults setObject:accessToken.tokenCode forKey:@"access_token"];
+    
 
     
 }

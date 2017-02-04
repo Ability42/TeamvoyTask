@@ -41,19 +41,50 @@
 
 - (void) authorizeUser:(void(^)(TTUser* user)) completion {
     
-    TTLoginViewController *loginVC = [[TTLoginViewController alloc] initWithCompletionBlock:^(TTAccessToken *token) {
-        self.accesToken = token;
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]) {
         
-        NSLog(@"%@", token.tokenCode);
-    }];
-    
-    UINavigationController *navController =  [[UINavigationController alloc] initWithRootViewController:loginVC];
-    UIViewController *mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
-    
-    [mainVC presentViewController:navController
-                         animated:YES
-                       completion:nil];
-    
+        NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/me"];
+
+        NSURL *url = components.URL;
+
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
+        
+        [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+        
+        [request setHTTPMethod:@"GET"];
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        
+        NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                         options:0
+                                                                                                           error:nil];
+                                                    
+                                                    
+                                                    NSLog(@"Data: %@", json);
+                                                }];
+        [task resume];
+        [task currentRequest];
+        NSLog(@"task.currentRequest %@", task.currentRequest);
+    } else {
+        
+        TTLoginViewController *loginVC = [[TTLoginViewController alloc] initWithCompletionBlock:^(TTAccessToken *token) {
+            self.accessToken = token;
+            
+            NSLog(@"%@", token.tokenCode);
+        }];
+        
+        UINavigationController *navController =  [[UINavigationController alloc] initWithRootViewController:loginVC];
+        UIViewController *mainVC = [[[[UIApplication sharedApplication] windows] firstObject] rootViewController];
+        
+        [mainVC presentViewController:navController
+                             animated:YES
+                           completion:nil];
+    }
     
 }
 
