@@ -11,10 +11,14 @@
 
 @interface TTPhoto : NSObject
 
+@property (strong, nonatomic) NSString *photoURL;
 @property (assign, nonatomic, getter=isLiked) BOOL liked; //liked byCurrent logged user
 @property (strong, nonatomic) TTUser *owner;
-@property (assign, nonatomic) NSUInteger amountOfLikes;
+@property (assign, nonatomic) NSInteger amountOfLikes;
 @property (strong, nonatomic) NSDate *uploadDate;
+@property (strong, nonatomic) NSString *photoID;
+
+- (instancetype)initWithServerResponse:(NSDictionary *)response;
 
 
 @end
