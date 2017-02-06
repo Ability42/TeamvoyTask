@@ -8,6 +8,7 @@
 
 #import "TTServerManager.h"
 #import <AFNetworking/AFNetworking.h>
+#import "TTPhoto.h"
 
 @interface TTServerManager () <NSURLSessionDelegate>
 
@@ -47,7 +48,7 @@
     
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]) {
-        [self getCurrentUser];
+        //[self getCurrentUser];
         
     } else {
         
@@ -149,7 +150,7 @@
 
 }
 
-- (void) getPhotoWithID:(NSString*)photoID completionHandler:(void (^)(NSMutableDictionary* dict))completionHandler {
+- (NSDictionary*) getPhotoWithID:(NSString*)photoID completionHandler:(void (^)(NSMutableDictionary* dict))completionHandler {
     
     NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos"];
     
@@ -182,9 +183,13 @@
                                                         
                                                     }];
     [getPhotoTask resume];
+    return jsonData;
 }
 
+// this method performed for like/unlike photod
+// if photo already liked --> unlike that photo
 - (void) likePhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSMutableDictionary* dict))completionHandler {
+    
     /*
     NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos"];
     
@@ -193,13 +198,21 @@
 
     components.queryItems = @[photoIDItem, photoLikeItem];
      */
+    
     NSURL *url = [NSURL URLWithString:[[@"https://api.unsplash.com/photos/" stringByAppendingString:photoID] stringByAppendingString:@"/like"]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
-    [request setHTTPMethod:@"POST"];
+    
+    if ([[[self getPhotoWithID:photoID
+           completionHandler:nil] valueForKey:@"liked_by_user"]  isEqual: @NO]) {
+        [request setHTTPMethod:@"DELETE"];
+    } else {
+        [request setHTTPMethod:@"POST"];
+    }
+
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
@@ -221,6 +234,9 @@
 
        
 }
+
+// Get a random photo
+
 
 
 

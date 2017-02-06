@@ -31,7 +31,7 @@ static NSString* const kPhotosOrderOldest = @"oldest";
                             orderedBy:(NSString*)photosOrder
                 withCompletionHandler:(void (^)(NSMutableDictionary* dict))completionHandle;
 
-- (void) getPhotoWithID:(NSString*)photoID
+- (NSDictionary*) getPhotoWithID:(NSString*)photoID
       completionHandler:(void (^)(NSMutableDictionary* dict))completionHandler;
 
 - (void) likePhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSMutableDictionary* dict))completionHandler;
