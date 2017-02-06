@@ -29,14 +29,38 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
     
+    TTServerManager *manager = [TTServerManager sharedManager];
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[TTServerManager sharedManager] authorizeUser:^(TTUser *user) {
+        [manager authorizeUser:^(TTUser *user) {
             NSLog(@"User authorized");
+            
         }];
     });
+    /*
+    [manager getPhotosFromServerWithPages:1
+                         withItemsPerPage:2
+                                orderedBy:@"oldest"
+                    withCompletionHandler:^(NSMutableDictionary *dict) {
+                        NSLog(@"Test CompletionHandler");
+                    }];
+    */
+     
+    /*
+    [manager getPhotoWithID:@"gkT4FfgHO5o"
+          completionHandler:^(NSMutableDictionary *dict) {
+              NSLog(@"getPhotoWithID: %@", dict);
+          }];
+    */
+    
+    [manager likePhotoWithID:@"yC-Yzbqy7PY" withCompletion:^(NSMutableDictionary *dict) {
+        NSLog(@"likePhotoWithID: %@", dict);
+    }];
+
     
     
+
 }
 
 

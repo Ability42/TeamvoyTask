@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78561AA71E45EE4D008780DE /* TTPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78561AA61E45EE4D008780DE /* TTPhoto.m */; };
 		7856D4D31E40A10000614805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4D21E40A10000614805 /* main.m */; };
 		7856D4D61E40A10000614805 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4D51E40A10000614805 /* AppDelegate.m */; };
 		7856D4D91E40A10000614805 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4D81E40A10000614805 /* ViewController.m */; };
@@ -55,6 +56,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		78561AA51E45EE4D008780DE /* TTPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPhoto.h; sourceTree = "<group>"; };
+		78561AA61E45EE4D008780DE /* TTPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTPhoto.m; sourceTree = "<group>"; };
 		7856D4CE1E40A10000614805 /* TeamvoyTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamvoyTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7856D4D21E40A10000614805 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7856D4D41E40A10000614805 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -187,6 +190,8 @@
 			children = (
 				7856D5151E40DCDA00614805 /* TTUser.h */,
 				7856D5161E40DCDA00614805 /* TTUser.m */,
+				78561AA51E45EE4D008780DE /* TTPhoto.h */,
+				78561AA61E45EE4D008780DE /* TTPhoto.m */,
 				7856D5181E40DD8000614805 /* TTAccessToken.h */,
 				7856D5191E40DD8000614805 /* TTAccessToken.m */,
 				7856D5121E40DB9B00614805 /* TTServerManager.h */,
@@ -337,6 +342,7 @@
 				7856D4D61E40A10000614805 /* AppDelegate.m in Sources */,
 				7856D5141E40DB9B00614805 /* TTServerManager.m in Sources */,
 				7856D4D31E40A10000614805 /* main.m in Sources */,
+				78561AA71E45EE4D008780DE /* TTPhoto.m in Sources */,
 				7856D5171E40DCDA00614805 /* TTUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
