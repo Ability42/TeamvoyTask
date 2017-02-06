@@ -14,24 +14,29 @@
 - (instancetype)initWithServerResponse:(NSDictionary *)response {
     self = [super init];
     if (self) {
-        for (NSDictionary* photoDict in response) {
-            NSLog(@"Photo dict: %@", photoDict);
-            
-            self.photoID = [photoDict objectForKey:@"id"];
-            self.liked = [photoDict objectForKey:@"liked_by_user"];
-            self.amountOfLikes = [[photoDict objectForKey:@"likes"] integerValue];
-            
-            // photo URL link
-            NSDictionary* urlsDict = [photoDict objectForKey:@"urls"];
-            self.photoURL = [urlsDict objectForKey:@"regular"];
-            
-            // photo owner (object)
-            NSDictionary* userDict = [photoDict objectForKey:@"user"];
-            self.owner = [[TTUser alloc] initWithServerResponse:userDict];
-            // upload date
-            
-            
+        NSLog(@"Photo dict: %@", response);
+        
+        self.photoID = [response objectForKey:@"id"];
+        if ([[response valueForKey:@"liked_by_user"]  isEqual: @NO]) {
+            self.liked = NO;
+        } else {
+            self.liked = YES;
         }
+        
+        self.amountOfLikes = [[response objectForKey:@"likes"] integerValue];
+        
+        // photo URL link
+        NSDictionary* urlsDict = [response objectForKey:@"urls"];
+        self.photoURL = [urlsDict objectForKey:@"regular"];
+        
+        // photo owner (object)
+        NSDictionary* userDict = [response objectForKey:@"user"];
+        self.owner = [[TTUser alloc] initWithServerResponse:userDict];
+        
+        // upload date
+            
+            
+        
     }
     return self;
 }
