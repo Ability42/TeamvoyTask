@@ -13,10 +13,12 @@
 
 @property (strong, nonatomic) TTAccessToken *accessToken;
 @property (strong, nonatomic) AFHTTPSessionManager *requestManager;
+@property (strong, nonatomic) NSDictionary *userJson;
+@property (strong, nonatomic) TTUser *currentUser;
+
+@property (strong, nonatomic) NSMutableArray *photosURL;
 
 /** URL Session **/
-
-
 
 @end
 
@@ -39,37 +41,14 @@
 
 #pragma mark - API
 
+/*** if user already authorized in previous session ***/
+/*** getCurrent user will be called ***/
 - (void) authorizeUser:(void(^)(TTUser* user)) completion {
     
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]) {
+        [self getCurrentUser];
         
-        NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/me"];
-
-        NSURL *url = components.URL;
-
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        
-        
-        [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
-        
-        [request setHTTPMethod:@"GET"];
-        
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-                                                completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                                                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
-                                                                                                         options:0
-                                                                                                           error:nil];
-                                                    
-                                                    
-                                                    NSLog(@"Data: %@", json);
-                                                }];
-        [task resume];
-        [task currentRequest];
-        NSLog(@"task.currentRequest %@", task.currentRequest);
     } else {
         
         TTLoginViewController *loginVC = [[TTLoginViewController alloc] initWithCompletionBlock:^(TTAccessToken *token) {
@@ -88,15 +67,160 @@
     
 }
 
-- (void) getUser {
+- (TTUser*) getCurrentUser {
+    
+    NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/me"];
+    
+    NSURL *url = components.URL;
+    
+    /***IMPORTANT: Pass bearer token ***/
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    
+    [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+    
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    __block NSDictionary *jsonData = nil;
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                                           options:0
+                                                                                             error:nil];
+                                                
+                                    
+                                            }];
+    [task resume];
+    [task currentRequest];
+
+    TTUser *currentUser = [[TTUser alloc] initWithServerResponse:jsonData];
+    return currentUser;
     
 }
 
+- (void) getPhotosFromServerWithPages:(NSUInteger)page
+                     withItemsPerPage:(NSUInteger)perPage
+                            orderedBy:(NSString*)photosOrder
+                withCompletionHandler:(void (^)(NSMutableDictionary* dict))completionHandler {
+    
+    NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos"];
+    
+    NSURLQueryItem *pageItem = [NSURLQueryItem queryItemWithName:@"page" value:[NSString stringWithFormat:@"%ld", page]];
+    NSURLQueryItem *perPageItem = [NSURLQueryItem queryItemWithName:@"per_page" value:[NSString stringWithFormat:@"%ld", perPage]];
+    NSURLQueryItem *photosOrderItem = [NSURLQueryItem queryItemWithName:@"order_by" value:photosOrder];
+    
+    components.queryItems = @[pageItem,perPageItem,photosOrderItem];
+    NSURL *url = components.URL;
 
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    __block NSMutableDictionary *jsonData;
+//    __block NSMutableArray *photosURLArray = [NSMutableArray array];
+    
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request
+                                            completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                
+                                                
+                                                jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                        options:0
+                                                                          error:nil];
+                                                
+                                                NSLog(@"JSON DATA: %@", jsonData);
+                                                NSLog(@"JSON DATA: %@", [jsonData valueForKey:@"id"]);
 
+                                                
+                                                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                                    completionHandler(jsonData);
+                                                }];
+                                                
+                                    
+                                            }];
+    
+    [task resume];
 
+}
 
+- (void) getPhotoWithID:(NSString*)photoID completionHandler:(void (^)(NSMutableDictionary* dict))completionHandler {
+    
+    NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos"];
+    
+    NSURLQueryItem *photoIDItem = [NSURLQueryItem queryItemWithName:@"id" value:photoID];
+    
+    components.queryItems = @[photoIDItem];
+    NSURL *url = components.URL;
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    __block NSMutableDictionary *jsonData;
+    NSURLSessionDataTask *getPhotoTask = [session dataTaskWithRequest:request
+                                                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                        
+                                                        NSLog(@"Response: %@", response);
+                                                        
+                                                        
+                                                        jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                   options:0
+                                                                                                     error:nil];
+                                                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                                            completionHandler(jsonData);
+                                                        }];
+                                                        
+                                                    }];
+    [getPhotoTask resume];
+}
 
+- (void) likePhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSMutableDictionary* dict))completionHandler {
+    /*
+    NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos"];
+    
+    NSURLQueryItem *photoIDItem = [NSURLQueryItem queryItemWithName:@"id" value:photoID];
+    NSURLQueryItem *photoLikeItem = [NSURLQueryItem queryItemWithName:@"like" value:nil];
+
+    components.queryItems = @[photoIDItem, photoLikeItem];
+     */
+    NSURL *url = [NSURL URLWithString:[[@"https://api.unsplash.com/photos/" stringByAppendingString:photoID] stringByAppendingString:@"/like"]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"POST"];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    __block NSMutableDictionary *jsonData;
+    NSURLSessionDataTask *postLike = [session dataTaskWithRequest:request
+                                                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+
+                                                        jsonData = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                  options:0
+                                                                                                    error:nil];
+
+                                                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                                                            completionHandler(jsonData);
+                                                        }];
+
+                                                        
+                                                    }];
+    [postLike resume];
+
+       
+}
 
 
 

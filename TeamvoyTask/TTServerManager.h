@@ -11,6 +11,11 @@
 #import "TTUser.h"
 #import "TTAccessToken.h"
 
+static NSString* const kPhotosOrderDefault = @"latest";
+static NSString* const kPhotosOrderPopular = @"popular";
+static NSString* const kPhotosOrderOldest = @"oldest";
+
+
 @interface TTServerManager : NSObject
 
 @property (nonatomic, strong, readonly) TTUser *currentUser;
@@ -20,10 +25,19 @@
 + (TTServerManager*) sharedManager;
 
 - (void) authorizeUser:(void(^)(TTUser* user)) completion;
-//- (void) requestToURL:(NSString*)url withMethodName:(NSString*)methodName andParams:(NSDictionary*)params;
-- (void) getPhotosFromServerWithOffset:(NSInteger)offset
-                                count:(NSInteger)count
-                             onSucces:(void (^)(NSArray *))success
-                            onFailure:(void (^)(NSError *))failure;
+
+- (void) getPhotosFromServerWithPages:(NSUInteger)page
+                     withItemsPerPage:(NSUInteger)perPage
+                            orderedBy:(NSString*)photosOrder
+                withCompletionHandler:(void (^)(NSMutableDictionary* dict))completionHandle;
+
+- (void) getPhotoWithID:(NSString*)photoID
+      completionHandler:(void (^)(NSMutableDictionary* dict))completionHandler;
+
+- (void) likePhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSMutableDictionary* dict))completionHandler;
+- (void) unlikePhotoAtURL:(NSString*)photoID;
+
+
+
 
 @end
