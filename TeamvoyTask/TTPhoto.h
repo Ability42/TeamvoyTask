@@ -11,8 +11,10 @@
 
 @interface TTPhoto : NSObject
 
-@property (assign, nonatomic, getter=isLiked) BOOL liked; //byCurrent logged user
+@property (assign, nonatomic, getter=isLiked) BOOL liked; //liked byCurrent logged user
 @property (strong, nonatomic) TTUser *owner;
 @property (assign, nonatomic) NSUInteger amountOfLikes;
+@property (strong, nonatomic) NSDate *uploadDate;
+
 
 @end
