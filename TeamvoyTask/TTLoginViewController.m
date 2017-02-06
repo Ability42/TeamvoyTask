@@ -91,7 +91,7 @@ static NSString * const kHostURL = @"teamvoytask";
         NSURLQueryItem *qItem3 = [NSURLQueryItem queryItemWithName:@"response_type"
                                                              value:@"code"];
         NSURLQueryItem *qItem4 = [NSURLQueryItem queryItemWithName:@"scope"
-                                                             value:@"public+read_user"];
+                                                             value:@"public+read_user+write_likes+read_photos"];
         
         components.queryItems = @[qItem1, qItem2, qItem3, qItem4];
         NSURL *url = components.URL;
