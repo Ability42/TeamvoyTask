@@ -44,6 +44,12 @@
 */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    /*
+    TTTableViewController *tableVC = [[TTTableViewController alloc] init];
+    
+    self.window.rootViewController = tableVC;
+    [self.window makeKeyAndVisible];
+    */
     return YES;
 }
 
