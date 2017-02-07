@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) NSString *firstName;
 @property (strong, nonatomic) NSString *lastName;
-@property (strong, nonatomic) NSURL* portfolioImageURL;
+@property (strong, nonatomic) NSString* portfolioImageURL;
 @property (strong, nonatomic) NSString* userID;
 @property (strong, nonatomic) NSString* name;
  

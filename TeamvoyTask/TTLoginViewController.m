@@ -6,7 +6,6 @@
 //  Copyright © 2017 Stepan Paholyk. All rights reserved.
 //
 
-#import <AFNetworking/AFNetworking.h>
 #import "TTLoginViewController.h"
 #import "TTServerManager.h"
 

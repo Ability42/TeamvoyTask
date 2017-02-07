@@ -16,12 +16,12 @@
 		7856D4E11E40A10000614805 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7856D4DF1E40A10000614805 /* LaunchScreen.storyboard */; };
 		7856D4EC1E40A10000614805 /* TeamvoyTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4EB1E40A10000614805 /* TeamvoyTaskTests.m */; };
 		7856D4F71E40A10000614805 /* TeamvoyTaskUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4F61E40A10000614805 /* TeamvoyTaskUITests.m */; };
-		7856D50F1E40DB8D00614805 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7856D50E1E40DB8D00614805 /* AFNetworking.framework */; };
-		7856D5101E40DB8D00614805 /* AFNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7856D50E1E40DB8D00614805 /* AFNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7856D5141E40DB9B00614805 /* TTServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5131E40DB9B00614805 /* TTServerManager.m */; };
 		7856D5171E40DCDA00614805 /* TTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5161E40DCDA00614805 /* TTUser.m */; };
 		7856D51A1E40DD8000614805 /* TTAccessToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D5191E40DD8000614805 /* TTAccessToken.m */; };
 		7856D5201E41F25B00614805 /* TTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D51F1E41F25B00614805 /* TTLoginViewController.m */; };
+		78778F5C1E490321005250CC /* TTTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78778F5A1E490321005250CC /* TTTableViewCell.m */; };
+		78778F5D1E490321005250CC /* TTTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78778F5B1E490321005250CC /* TTTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,20 +40,6 @@
 			remoteInfo = TeamvoyTask;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		7856D5111E40DB8D00614805 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				7856D5101E40DB8D00614805 /* AFNetworking.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		78561AA51E45EE4D008780DE /* TTPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPhoto.h; sourceTree = "<group>"; };
@@ -74,7 +60,6 @@
 		7856D4F21E40A10000614805 /* TeamvoyTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamvoyTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7856D4F61E40A10000614805 /* TeamvoyTaskUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamvoyTaskUITests.m; sourceTree = "<group>"; };
 		7856D4F81E40A10000614805 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7856D50E1E40DB8D00614805 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = ../AFNetworking.framework; sourceTree = "<group>"; };
 		7856D5121E40DB9B00614805 /* TTServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTServerManager.h; sourceTree = "<group>"; };
 		7856D5131E40DB9B00614805 /* TTServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTServerManager.m; sourceTree = "<group>"; };
 		7856D5151E40DCDA00614805 /* TTUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTUser.h; sourceTree = "<group>"; };
@@ -83,6 +68,9 @@
 		7856D5191E40DD8000614805 /* TTAccessToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAccessToken.m; sourceTree = "<group>"; };
 		7856D51E1E41F25B00614805 /* TTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTLoginViewController.h; sourceTree = "<group>"; };
 		7856D51F1E41F25B00614805 /* TTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTLoginViewController.m; sourceTree = "<group>"; };
+		78778F591E490321005250CC /* TTTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTableViewCell.h; sourceTree = "<group>"; };
+		78778F5A1E490321005250CC /* TTTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTableViewCell.m; sourceTree = "<group>"; };
+		78778F5B1E490321005250CC /* TTTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7856D50F1E40DB8D00614805 /* AFNetworking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,9 +123,9 @@
 			children = (
 				7856D4D41E40A10000614805 /* AppDelegate.h */,
 				7856D4D51E40A10000614805 /* AppDelegate.m */,
+				788A47521E4A30E800BEB8BD /* View */,
 				7856D52C1E43DE1500614805 /* Model */,
 				7856D52B1E43DDF600614805 /* Controller */,
-				7856D4E21E40A10000614805 /* Info.plist */,
 				7856D4D11E40A10000614805 /* Supporting Files */,
 			);
 			path = TeamvoyTask;
@@ -147,10 +134,9 @@
 		7856D4D11E40A10000614805 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7856D4E21E40A10000614805 /* Info.plist */,
 				7856D4DD1E40A10000614805 /* Assets.xcassets */,
-				7856D4DA1E40A10000614805 /* Main.storyboard */,
 				7856D4DF1E40A10000614805 /* LaunchScreen.storyboard */,
-				7856D50E1E40DB8D00614805 /* AFNetworking.framework */,
 				7856D4D21E40A10000614805 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -200,6 +186,17 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		788A47521E4A30E800BEB8BD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				78778F591E490321005250CC /* TTTableViewCell.h */,
+				78778F5A1E490321005250CC /* TTTableViewCell.m */,
+				78778F5B1E490321005250CC /* TTTableViewCell.xib */,
+				7856D4DA1E40A10000614805 /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -210,7 +207,6 @@
 				7856D4CA1E40A0FF00614805 /* Sources */,
 				7856D4CB1E40A0FF00614805 /* Frameworks */,
 				7856D4CC1E40A0FF00614805 /* Resources */,
-				7856D5111E40DB8D00614805 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -268,6 +264,7 @@
 				TargetAttributes = {
 					7856D4CD1E40A0FF00614805 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = ZW9JWEU2NM;
 						ProvisioningStyle = Automatic;
 					};
 					7856D4E61E40A10000614805 = {
@@ -312,6 +309,7 @@
 				7856D4E11E40A10000614805 /* LaunchScreen.storyboard in Resources */,
 				7856D4DE1E40A10000614805 /* Assets.xcassets in Resources */,
 				7856D4DC1E40A10000614805 /* Main.storyboard in Resources */,
+				78778F5D1E490321005250CC /* TTTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78778F5C1E490321005250CC /* TTTableViewCell.m in Sources */,
 				7856D4D91E40A10000614805 /* ViewController.m in Sources */,
 				7856D51A1E40DD8000614805 /* TTAccessToken.m in Sources */,
 				7856D5201E41F25B00614805 /* TTLoginViewController.m in Sources */,
@@ -438,7 +437,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -479,7 +478,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -490,12 +489,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZW9JWEU2NM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TeamvoyTask/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SP.TeamvoyTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -506,12 +507,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZW9JWEU2NM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TeamvoyTask/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SP.TeamvoyTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
