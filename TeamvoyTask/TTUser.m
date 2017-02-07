@@ -23,6 +23,18 @@
         NSDictionary* portfolioImageDict = [response objectForKey:@"profile_image"];
         self.portfolioImageURL = [portfolioImageDict objectForKey:@"medium"];
         
+        NSURLSessionTask *portfolioImageDownloadTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:self.portfolioImageURL]
+                                                                                   completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                                                       if (data) {
+                                                                                           self.image= [UIImage imageWithData:data];
+                                                                                           
+                                                                                       }
+                                                                                   }];
+        
+        
+        
+        [portfolioImageDownloadTask resume];
+        
         
     }
     return self;

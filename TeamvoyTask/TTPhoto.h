@@ -17,6 +17,7 @@
 @property (assign, nonatomic) NSInteger amountOfLikes;
 @property (strong, nonatomic) NSDate *uploadDate;
 @property (strong, nonatomic) NSString *photoID;
+@property (strong, nonatomic) UIImage *image;
 
 - (instancetype)initWithServerResponse:(NSDictionary *)response;
 

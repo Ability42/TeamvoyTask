@@ -33,9 +33,15 @@
         NSDictionary* userDict = [response objectForKey:@"user"];
         self.owner = [[TTUser alloc] initWithServerResponse:userDict];
         
-        // upload date
-            
-            
+        // непосрєдствіно фото
+        NSURLSessionTask *photoDownloadTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:_photoURLString]
+                                                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                                              if (data) {
+                                                                                  self.image = [UIImage imageWithData:data];
+                                                                              }
+                                                                              
+                                                                          }];
+        [photoDownloadTask resume];
         
     }
     return self;
