@@ -11,7 +11,7 @@
 
 @interface TTPhoto : NSObject
 
-@property (strong, nonatomic) NSString *photoURL;
+@property (strong, nonatomic) NSString *photoURLString;
 @property (assign, nonatomic) BOOL liked; //liked byCurrent logged user
 @property (strong, nonatomic) TTUser *owner;
 @property (assign, nonatomic) NSInteger amountOfLikes;

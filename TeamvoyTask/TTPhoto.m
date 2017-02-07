@@ -27,7 +27,7 @@
         
         // photo URL link
         NSDictionary* urlsDict = [response objectForKey:@"urls"];
-        self.photoURL = [urlsDict objectForKey:@"regular"];
+        self.photoURLString = [urlsDict objectForKey:@"regular"];
         
         // photo owner (object)
         NSDictionary* userDict = [response objectForKey:@"user"];
