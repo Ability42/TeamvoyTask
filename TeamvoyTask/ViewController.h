@@ -10,6 +10,8 @@
 
 @interface ViewController : UIViewController
 
+- (void) setPhotoFromURL:(NSURL*)url withIndexPath:(NSIndexPath*)indexPath;
+- (void) setPortfolioPhotoFromURL:(NSURL*)url withIndexPath:(NSIndexPath*)indexPath;
 
 @end
 

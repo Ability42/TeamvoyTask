@@ -7,19 +7,21 @@
 //
 
 #import "TTServerManager.h"
-#import <AFNetworking/AFNetworking.h>
 #import "TTPhoto.h"
 
 @interface TTServerManager () <NSURLSessionDelegate>
 
 @property (strong, nonatomic) TTAccessToken *accessToken;
-@property (strong, nonatomic) AFHTTPSessionManager *requestManager;
 @property (strong, nonatomic) NSDictionary *userJson;
 @property (strong, nonatomic) TTUser *currentUser;
 
 @property (strong, nonatomic) NSMutableArray *photosURL;
 
-/** URL Session **/
+/** getPhotosFromServerWithPages **/
+@property (nonatomic, assign) NSInteger currentPage;
+@property (nonatomic, assign) NSInteger totalPages;
+@property (nonatomic, assign) NSInteger totalItems;
+
 
 @end
 
@@ -48,7 +50,7 @@
     
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]) {
-        //[self getCurrentUser];
+        [self getCurrentUser];
         
     } else {
         
@@ -206,12 +208,12 @@
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
     
-    if ([[[self getPhotoWithID:photoID
-           completionHandler:nil] valueForKey:@"liked_by_user"]  isEqual: @NO]) {
-        [request setHTTPMethod:@"DELETE"];
-    } else {
+    //if ([[[self getPhotoWithID:photoID
+         //  completionHandler:nil] valueForKey:@"liked_by_user"]  isEqual: @NO]) {
+      //  [request setHTTPMethod:@"DELETE"];
+  //  } else {
         [request setHTTPMethod:@"POST"];
-    }
+  //  }
 
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -236,7 +238,9 @@
 }
 
 // Get a random photo
-
+- (void) getRandomPhoto {
+    
+}
 
 
 
