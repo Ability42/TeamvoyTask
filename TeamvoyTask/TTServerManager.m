@@ -37,11 +37,15 @@
 
 /*** if user already authorized in previous session ***/
 /*** getCurrent user will be called ***/
+/*** and you can check attributes of user, that already logged ***/
 - (void) authorizeUser:(void(^)(TTUser* user)) completion {
     
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]) {
-        [self getCurrentUser];
+//        TTUser* loggedUser = [self getCurrentUser];
+//        NSLog(@"Logged User name: %@", loggedUser.name);
+//        NSLog(@"Logged User ID: %@", loggedUser.userID);
+
         
     } else {
         
@@ -165,14 +169,10 @@
                                                             jsonDataSinglePhoto = [NSJSONSerialization JSONObjectWithData:data
                                                                                                        options:0
                                                                                                          error:nil];
-                                                            if ([[NSThread currentThread] isMainThread]){
-                                                                completionHandler(jsonDataSinglePhoto);
-                                                                NSLog(@"JSON DATA WITH SINGLE PHOTO %@", jsonDataSinglePhoto);
-                                                            } else {
-                                                                NSLog(@"NOT MAIN THREAD");
-                                                            }
+                                                            completionHandler(jsonDataSinglePhoto);
+                                                            NSLog(@"JSON DATA WITH SINGLE PHOTO %@", jsonDataSinglePhoto);
                                                         
-                                                        });      
+                                                        });
   
                                                     }];
     [getPhotoTask resume];

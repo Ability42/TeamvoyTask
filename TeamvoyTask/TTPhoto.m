@@ -33,7 +33,6 @@
         NSDictionary* userDict = [response objectForKey:@"user"];
         self.owner = [[TTUser alloc] initWithServerResponse:userDict];
         
-        // непосрєдствіно фото
         NSURLSessionTask *photoDownloadTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:_photoURLString]
                                                                           completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                                                                               if (data) {

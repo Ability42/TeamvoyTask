@@ -213,38 +213,13 @@
     TTTableViewCell *customCell = [self.tableView cellForRowAtIndexPath:tIndexPath];
     TTPhoto *photoObj = [self.currentPhotos objectAtIndex:sender.tag];
     
-    [self.tableView beginUpdates];
-    
-    // get real-time likes from server
-    __block NSInteger amountOfLikes;
-    
-    [self.manager getPhotoWithID:photoObj.photoID
-                  withCompletion:^(NSDictionary *dict) {
-                      [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                          amountOfLikes = [dict valueForKey:@"likes"];
-                          [customCell.totalLikes setText:[NSString stringWithFormat:@"Total lokes %ld", amountOfLikes]];// likes?
-                      }];
-                  }];
-    
-
-    
-    [self.tableView endUpdates];
-
-    /*
-    
-    
-    
     if ([sender.currentTitle isEqualToString:@"Like"]) {
+        customCell.totalLikes.text = [NSString stringWithFormat:@"Total likes %ld", photoObj.amountOfLikes+1];
         [sender setTitle:@"Unlike" forState:UIControlStateNormal];
-        
-        
-    } else if ([sender.currentTitle isEqualToString:@"Unlike"]) {
+    } else {
+        customCell.totalLikes.text = [NSString stringWithFormat:@"Total likes %ld", photoObj.amountOfLikes-1];
         [sender setTitle:@"Like" forState:UIControlStateNormal];
-        [customCell.totalLikes setText:[NSString stringWithFormat:@"Total likes: %ld", photoObj.amountOfLikes-1]];
     }
-    
-*/
-    
     
 }
 
