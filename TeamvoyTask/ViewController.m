@@ -200,12 +200,51 @@
              withCompletion:^(NSDictionary *photoLikeDict) {
                  NSLog(@"Photo liked with ID: %@", [photoLikeDict valueForKey:@"liked_by_user"]);
              }];
-    // update UI
+
+    
+    CGPoint position = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *cellIndexPath = [self.tableView indexPathForRowAtPoint:position];
+    
+    NSInteger section = cellIndexPath.section;
+    NSInteger row = cellIndexPath.row;
+    
+    NSIndexPath *tIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    
+    TTTableViewCell *customCell = [self.tableView cellForRowAtIndexPath:tIndexPath];
+    TTPhoto *photoObj = [self.currentPhotos objectAtIndex:sender.tag];
+    
+    [self.tableView beginUpdates];
+    
+    // get real-time likes from server
+    __block NSInteger amountOfLikes;
+    
+    [self.manager getPhotoWithID:photoObj.photoID
+                  withCompletion:^(NSDictionary *dict) {
+                      [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                          amountOfLikes = [dict valueForKey:@"likes"];
+                          [customCell.totalLikes setText:[NSString stringWithFormat:@"Total lokes %ld", amountOfLikes]];// likes?
+                      }];
+                  }];
+    
+
+    
+    [self.tableView endUpdates];
+
+    /*
+    
+    
+    
     if ([sender.currentTitle isEqualToString:@"Like"]) {
         [sender setTitle:@"Unlike" forState:UIControlStateNormal];
+        
+        
     } else if ([sender.currentTitle isEqualToString:@"Unlike"]) {
         [sender setTitle:@"Like" forState:UIControlStateNormal];
+        [customCell.totalLikes setText:[NSString stringWithFormat:@"Total likes: %ld", photoObj.amountOfLikes-1]];
     }
+    
+*/
+    
     
 }
 

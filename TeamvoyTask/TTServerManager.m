@@ -172,11 +172,7 @@
                                                                 NSLog(@"NOT MAIN THREAD");
                                                             }
                                                         
-                                                        });
-                                                        
-                                                        
-                                                        
-                                                        
+                                                        });      
   
                                                     }];
     [getPhotoTask resume];
