@@ -217,10 +217,6 @@
                                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                                                         
                                                         
-                                                        completionHandler(jsonDataLike);
-                                                        NSLog(@"jsonDataLike %@", jsonDataLike);
-                                                        
-                                                        /*
                                                         dispatch_async(dispatch_get_main_queue(), ^{
                                                             jsonDataLike = [NSJSONSerialization JSONObjectWithData:data
                                                                                                            options:0
@@ -233,12 +229,7 @@
                                                             }
                                                             
                                                         });
-                                                        */
-
-                                                        
-                                                        
-                                                        
-
+   
                                                         
                                                     }];
     [postLike resume];

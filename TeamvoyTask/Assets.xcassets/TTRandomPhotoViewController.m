@@ -27,13 +27,35 @@
         TTPhoto *photoObj = [[TTPhoto alloc]  initWithServerResponse:dict];
         self.portfolioPhoto.image = photoObj.owner.image;
         self.userName.text = photoObj.owner.name;
-        self.photo.image = photoObj.image;
+
             self.photoID = photoObj.photoID;
         self.likes.text = [NSString stringWithFormat:@"Likes: %ld", photoObj.amountOfLikes];
         [self.likeButton addTarget:self
                             action:@selector(likeAction:)
                   forControlEvents:UIControlEventTouchUpInside];
         self.currentRandomPhoto = photoObj;
+        
+        NSURLSessionTask *photoDownloadTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:photoObj.photoURLString]
+                                                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                                              
+                                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                  if (data) {
+                                                                                      self.photo.image = [UIImage imageWithData:data];
+                                                                                  }
+                                                                              });
+                                                                          }];
+        [photoDownloadTask resume];
+        
+        NSURLSessionTask *portfolioPhotoDownloadTask = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:photoObj.owner.portfolioImageURL]
+                                                                          completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                                              
+                                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                  if (data) {
+                                                                                      self.portfolioPhoto.image = [UIImage imageWithData:data];
+                                                                                  }
+                                                                              });
+                                                                          }];
+        [portfolioPhotoDownloadTask resume];
 
     }];
     
@@ -41,6 +63,10 @@
 }
 
 #pragma mark - Action
+
+- (void) downloadImage {
+    
+}
 
 - (IBAction)likeAction:(UIButton*)sender {
     
@@ -50,11 +76,9 @@
     }];
     
     if ([sender.titleLabel.text isEqualToString:@"Like"]) {
-        sender.titleLabel.text = @"Unlike";
-        sender.titleLabel.tintColor = [UIColor grayColor];
-    } else if ([sender.titleLabel.text isEqualToString:@"Unike"]) {
-        sender.titleLabel.text = @"Like";
-        sender.titleLabel.tintColor = [UIColor whiteColor];
+         [sender setTitle:@"Unlike" forState:UIControlStateNormal];
+    } else if ([sender.currentTitle isEqualToString:@"Unlike"]) {
+         [sender setTitle:@"Like" forState:UIControlStateNormal];
     }
     
 }
