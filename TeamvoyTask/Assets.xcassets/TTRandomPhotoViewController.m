@@ -13,6 +13,7 @@
 @interface TTRandomPhotoViewController ()
 
 @property (nonatomic, strong) TTPhoto* currentRandomPhoto;
+@property (nonatomic, assign) NSInteger tmpLikes;
 
 @end
 
@@ -30,6 +31,7 @@
 
             self.photoID = photoObj.photoID;
         self.likes.text = [NSString stringWithFormat:@"Likes: %ld", photoObj.amountOfLikes];
+        self.tmpLikes = photoObj.amountOfLikes;
         [self.likeButton addTarget:self
                             action:@selector(likeAction:)
                   forControlEvents:UIControlEventTouchUpInside];
@@ -77,8 +79,10 @@
     
     if ([sender.titleLabel.text isEqualToString:@"Like"]) {
          [sender setTitle:@"Unlike" forState:UIControlStateNormal];
+        self.likes.text = [NSString stringWithFormat:@"Total likes %ld", self.tmpLikes+1];
     } else if ([sender.currentTitle isEqualToString:@"Unlike"]) {
          [sender setTitle:@"Like" forState:UIControlStateNormal];
+        self.likes.text = [NSString stringWithFormat:@"Total likes %ld", self.tmpLikes-1];
     }
     
 }
