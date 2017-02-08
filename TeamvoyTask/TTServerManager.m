@@ -12,16 +12,7 @@
 @interface TTServerManager () <NSURLSessionDelegate>
 
 @property (strong, nonatomic) TTAccessToken *accessToken;
-@property (strong, nonatomic) NSDictionary *userJson;
 @property (strong, nonatomic) TTUser *currentUser;
-
-@property (strong, nonatomic) NSMutableArray *photosURL;
-
-/** getPhotosFromServerWithPages **/
-@property (nonatomic, assign) NSInteger currentPage;
-@property (nonatomic, assign) NSInteger totalPages;
-@property (nonatomic, assign) NSInteger totalItems;
-
 
 @end
 
@@ -127,7 +118,6 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     __block NSMutableDictionary *jsonData;
-//    __block NSMutableArray *photosURLArray = [NSMutableArray array];
     
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request
                                             completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -137,8 +127,8 @@
                                                                         options:0
                                                                           error:nil];
                                                 
-                                                NSLog(@"JSON DATA: %@", jsonData);
-                                                NSLog(@"JSON DATA: %@", [jsonData valueForKey:@"id"]);
+                                                //NSLog(@"JSON DATA: %@", jsonData);
+                                                //NSLog(@"JSON DATA: %@", [jsonData valueForKey:@"id"]);
 
                                                 
                                                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -152,13 +142,115 @@
 
 }
 
-- (NSDictionary*) getPhotoWithID:(NSString*)photoID completionHandler:(void (^)(NSMutableDictionary* dict))completionHandler {
+- (void) getPhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSDictionary* dict))completionHandler {
     
+    NSString *baseURLString = @"https://api.unsplash.com/photos/";
+    
+    
+    NSURL *url = [NSURL URLWithString:[baseURLString stringByAppendingString:photoID]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    __block NSDictionary *jsonDataSinglePhoto;
+    NSURLSessionDataTask *getPhotoTask = [session dataTaskWithRequest:request
+                                                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                        
+                                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                                            jsonDataSinglePhoto = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                       options:0
+                                                                                                         error:nil];
+                                                            if ([[NSThread currentThread] isMainThread]){
+                                                                completionHandler(jsonDataSinglePhoto);
+                                                                NSLog(@"JSON DATA WITH SINGLE PHOTO %@", jsonDataSinglePhoto);
+                                                            } else {
+                                                                NSLog(@"NOT MAIN THREAD");
+                                                            }
+                                                        
+                                                        });
+                                                        
+                                                        
+                                                        
+                                                        
+  
+                                                    }];
+    [getPhotoTask resume];
+}
+
+
+// this method performed for like/unlike photod
+// if photo already liked --> this method unlike that photo
+- (void) likePhoto:(TTPhoto*)photo withCompletion:(void (^)(NSDictionary* photoLikeDict)) completionHandler {
+    
+    /*
     NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos"];
     
     NSURLQueryItem *photoIDItem = [NSURLQueryItem queryItemWithName:@"id" value:photoID];
+    NSURLQueryItem *photoLikeItem = [NSURLQueryItem queryItemWithName:@"like" value:nil];
+
+    components.queryItems = @[photoIDItem, photoLikeItem];
+     */
     
-    components.queryItems = @[photoIDItem];
+    NSURL *url = [NSURL URLWithString:[[@"https://api.unsplash.com/photos/" stringByAppendingString:photo.photoID] stringByAppendingString:@"/like"]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
+    
+
+    if (photo.liked == YES) {
+        [request setHTTPMethod:@"DELETE"];
+    } else if (photo.liked == NO) {
+        [request setHTTPMethod:@"POST"];
+    }
+
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    __block NSMutableDictionary *jsonDataLike;
+    NSURLSessionDataTask *postLike = [session dataTaskWithRequest:request
+                                                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                        
+                                                        
+                                                        completionHandler(jsonDataLike);
+                                                        NSLog(@"jsonDataLike %@", jsonDataLike);
+                                                        
+                                                        /*
+                                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                                            jsonDataLike = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                           options:0
+                                                                                                             error:nil];
+                                                            if ([[NSThread currentThread] isMainThread]){
+                                                                completionHandler(jsonDataLike);
+                                                                NSLog(@"jsonDataLike %@", jsonDataLike);
+                                                            } else {
+                                                                NSLog(@"NOT MAIN THREAD");
+                                                            }
+                                                            
+                                                        });
+                                                        */
+
+                                                        
+                                                        
+                                                        
+
+                                                        
+                                                    }];
+    [postLike resume];
+
+       
+}
+
+// Get a random photo
+- (void) getRandomPhotoWithCompletionHandler:(void (^)(NSMutableDictionary* dict))completionHandler {
+    // GET /photos/random
+    
+    NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos/random"];
     NSURL *url = components.URL;
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -170,7 +262,7 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     __block NSMutableDictionary *jsonData;
-    NSURLSessionDataTask *getPhotoTask = [session dataTaskWithRequest:request
+    NSURLSessionDataTask *getRandomPhotoTask = [session dataTaskWithRequest:request
                                                     completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                                                         
                                                         NSLog(@"Response: %@", response);
@@ -184,61 +276,8 @@
                                                         }];
                                                         
                                                     }];
-    [getPhotoTask resume];
-    return jsonData;
-}
+    [getRandomPhotoTask resume];
 
-// this method performed for like/unlike photod
-// if photo already liked --> unlike that photo
-- (void) likePhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSMutableDictionary* dict))completionHandler {
-    
-    /*
-    NSURLComponents *components = [NSURLComponents componentsWithString:@"https://api.unsplash.com/photos"];
-    
-    NSURLQueryItem *photoIDItem = [NSURLQueryItem queryItemWithName:@"id" value:photoID];
-    NSURLQueryItem *photoLikeItem = [NSURLQueryItem queryItemWithName:@"like" value:nil];
-
-    components.queryItems = @[photoIDItem, photoLikeItem];
-     */
-    
-    NSURL *url = [NSURL URLWithString:[[@"https://api.unsplash.com/photos/" stringByAppendingString:photoID] stringByAppendingString:@"/like"]];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[@"Bearer " stringByAppendingString:(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]] forHTTPHeaderField:@"Authorization"];
-    
-    //if ([[[self getPhotoWithID:photoID
-         //  completionHandler:nil] valueForKey:@"liked_by_user"]  isEqual: @NO]) {
-      //  [request setHTTPMethod:@"DELETE"];
-  //  } else {
-        [request setHTTPMethod:@"POST"];
-  //  }
-
-    
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    
-    __block NSMutableDictionary *jsonData;
-    NSURLSessionDataTask *postLike = [session dataTaskWithRequest:request
-                                                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-
-                                                        jsonData = [NSJSONSerialization JSONObjectWithData:data
-                                                                                                  options:0
-                                                                                                    error:nil];
-
-                                                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                                                            completionHandler(jsonData);
-                                                        }];
-
-                                                        
-                                                    }];
-    [postLike resume];
-
-       
-}
-
-// Get a random photo
-- (void) getRandomPhoto {
     
 }
 

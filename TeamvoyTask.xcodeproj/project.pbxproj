@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7813377F1E4A5AE0002A9487 /* TTLoadingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7813377D1E4A5AE0002A9487 /* TTLoadingTableViewCell.m */; };
 		781337801E4A5AE0002A9487 /* TTLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7813377E1E4A5AE0002A9487 /* TTLoadingTableViewCell.xib */; };
+		781337841E4A810B002A9487 /* TTRandomPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 781337821E4A810B002A9487 /* TTRandomPhotoViewController.m */; };
+		781337851E4A810B002A9487 /* TTRandomPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781337831E4A810B002A9487 /* TTRandomPhotoViewController.xib */; };
 		78561AA71E45EE4D008780DE /* TTPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78561AA61E45EE4D008780DE /* TTPhoto.m */; };
 		7856D4D31E40A10000614805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4D21E40A10000614805 /* main.m */; };
 		7856D4D61E40A10000614805 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4D51E40A10000614805 /* AppDelegate.m */; };
@@ -47,6 +49,9 @@
 		7813377C1E4A5AE0002A9487 /* TTLoadingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTLoadingTableViewCell.h; path = Assets.xcassets/TTLoadingTableViewCell.h; sourceTree = "<group>"; };
 		7813377D1E4A5AE0002A9487 /* TTLoadingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTLoadingTableViewCell.m; path = Assets.xcassets/TTLoadingTableViewCell.m; sourceTree = "<group>"; };
 		7813377E1E4A5AE0002A9487 /* TTLoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TTLoadingTableViewCell.xib; path = Assets.xcassets/TTLoadingTableViewCell.xib; sourceTree = "<group>"; };
+		781337811E4A810B002A9487 /* TTRandomPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTRandomPhotoViewController.h; path = Assets.xcassets/TTRandomPhotoViewController.h; sourceTree = "<group>"; };
+		781337821E4A810B002A9487 /* TTRandomPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTRandomPhotoViewController.m; path = Assets.xcassets/TTRandomPhotoViewController.m; sourceTree = "<group>"; };
+		781337831E4A810B002A9487 /* TTRandomPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TTRandomPhotoViewController.xib; path = Assets.xcassets/TTRandomPhotoViewController.xib; sourceTree = "<group>"; };
 		78561AA51E45EE4D008780DE /* TTPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPhoto.h; sourceTree = "<group>"; };
 		78561AA61E45EE4D008780DE /* TTPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTPhoto.m; sourceTree = "<group>"; };
 		7856D4CE1E40A10000614805 /* TeamvoyTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamvoyTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +177,9 @@
 				7856D4D81E40A10000614805 /* ViewController.m */,
 				7856D51E1E41F25B00614805 /* TTLoginViewController.h */,
 				7856D51F1E41F25B00614805 /* TTLoginViewController.m */,
+				781337811E4A810B002A9487 /* TTRandomPhotoViewController.h */,
+				781337821E4A810B002A9487 /* TTRandomPhotoViewController.m */,
+				781337831E4A810B002A9487 /* TTRandomPhotoViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -196,10 +204,10 @@
 			children = (
 				78778F591E490321005250CC /* TTTableViewCell.h */,
 				78778F5A1E490321005250CC /* TTTableViewCell.m */,
+				78778F5B1E490321005250CC /* TTTableViewCell.xib */,
 				7813377C1E4A5AE0002A9487 /* TTLoadingTableViewCell.h */,
 				7813377D1E4A5AE0002A9487 /* TTLoadingTableViewCell.m */,
 				7813377E1E4A5AE0002A9487 /* TTLoadingTableViewCell.xib */,
-				78778F5B1E490321005250CC /* TTTableViewCell.xib */,
 				7856D4DA1E40A10000614805 /* Main.storyboard */,
 			);
 			name = View;
@@ -318,6 +326,7 @@
 				781337801E4A5AE0002A9487 /* TTLoadingTableViewCell.xib in Resources */,
 				7856D4DE1E40A10000614805 /* Assets.xcassets in Resources */,
 				7856D4DC1E40A10000614805 /* Main.storyboard in Resources */,
+				781337851E4A810B002A9487 /* TTRandomPhotoViewController.xib in Resources */,
 				78778F5D1E490321005250CC /* TTTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +354,7 @@
 			files = (
 				78778F5C1E490321005250CC /* TTTableViewCell.m in Sources */,
 				7856D4D91E40A10000614805 /* ViewController.m in Sources */,
+				781337841E4A810B002A9487 /* TTRandomPhotoViewController.m in Sources */,
 				7856D51A1E40DD8000614805 /* TTAccessToken.m in Sources */,
 				7856D5201E41F25B00614805 /* TTLoginViewController.m in Sources */,
 				7856D4D61E40A10000614805 /* AppDelegate.m in Sources */,

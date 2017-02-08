@@ -14,7 +14,7 @@
 - (instancetype)initWithServerResponse:(NSDictionary *)response {
     self = [super init];
     if (self) {
-        NSLog(@"Photo dict: %@", response);
+        // NSLog(@"Photo dict: %@", response);
         
         self.photoID = [response objectForKey:@"id"];
         if ([[response valueForKey:@"liked_by_user"]  isEqual: @NO]) {

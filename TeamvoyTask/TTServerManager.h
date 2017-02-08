@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TTLoginViewController.h"
 #import "TTUser.h"
+#import "TTPhoto.h"
 #import "TTAccessToken.h"
 
 static NSString* const kPhotosOrderDefault = @"latest";
@@ -31,11 +32,12 @@ static NSString* const kPhotosOrderOldest = @"oldest";
                             orderedBy:(NSString*)photosOrder
                 withCompletionHandler:(void (^)(NSMutableDictionary* dict))completionHandle;
 
-- (NSDictionary*) getPhotoWithID:(NSString*)photoID
-      completionHandler:(void (^)(NSMutableDictionary* dict))completionHandler;
+- (void) getPhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSDictionary* dict))completionHandler;
 
-- (void) likePhotoWithID:(NSString*)photoID withCompletion:(void (^)(NSMutableDictionary* dict))completionHandler;
-- (void) unlikePhotoAtURL:(NSString*)photoID;
+- (void) likePhoto:(TTPhoto*)photo withCompletion:(void (^)(NSDictionary* photoLikeDict)) completionHandler;
+
+- (void) getRandomPhotoWithCompletionHandler:(void (^)(NSMutableDictionary* dict))completionHandler;
+
 
 
 

@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *photo;
 @property (weak, nonatomic) IBOutlet UILabel *totalLikes;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (strong, nonatomic) NSString *cellPhotoID;
 
 - (void) cellSetup;
 
