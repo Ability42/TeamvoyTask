@@ -294,6 +294,14 @@
 
 #pragma mark - UITableViewDelegate
 
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row < [self.currentPhotos count]) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Height depending on photo size that comes from server
