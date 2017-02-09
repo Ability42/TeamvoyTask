@@ -8,7 +8,3 @@ Photos retrieved from unsplash API. Also user can:
 * filter image onto 3 categories: "popular", "oldest", "latest"
 
 
-Some info
-NSURLSession is responsible for client-server managing(fetching and post data)
-
-Some screenshots:
