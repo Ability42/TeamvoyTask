@@ -7,6 +7,7 @@
 //
 
 
+#import <SystemConfiguration/SystemConfiguration.h>
 #import "ViewController.h"
 #import "TTServerManager.h"
 #import "TTLoginViewController.h"
@@ -14,13 +15,14 @@
 #import "TTTableViewCell.h"
 #import "TTLoadingTableViewCell.h"
 #import "TTRandomPhotoViewController.h"
+#import "Reachability.h"
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) NSMutableArray<TTPhoto*> *currentPhotos;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) TTLoadingTableViewCell *loadCell;
-@property (strong, nonatomic) NSCache *imageCache;
+//@property (strong, nonatomic) NSCache *imageCache;
 @property (strong, nonatomic) TTServerManager *manager;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *filter;
 
@@ -62,28 +64,49 @@
     [super viewDidAppear:YES];
     [self styleNavBar];
     
-    TTServerManager *manager = [TTServerManager sharedManager];
-    self.manager = manager;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [manager authorizeUser:^(TTUser *user) {
-            NSLog(@"User authorized");
-            
-        }];
-    });
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]) {
-        NSString *filterApply = [self getCurrentFilterApply];
+    Reachability *reach = [Reachability reachabilityForInternetConnection];
+    NetworkStatus netStatus = [reach currentReachabilityStatus];
+    if (netStatus == NotReachable)
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No network connection"
+                                                                                     message:@"Please, close app and check your Internet connection"
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+
+        UIAlertAction* ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 //Do some thing here
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+        [alert addAction:ok];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        TTServerManager *manager = [TTServerManager sharedManager];
+        self.manager = manager;
+        
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            [self getPhotosWithFilterApply:filterApply];
+            [manager authorizeUser:^(TTUser *user) {
+                NSLog(@"User authorized");
+                
+            }];
         });
         
-    } else {
-        NSLog(@"Coldn't fount Access Token");
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"access_token"]) {
+            NSString *filterApply = [self getCurrentFilterApply];
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+                [self getPhotosWithFilterApply:filterApply];
+            });
+            
+        } else {
+            NSLog(@"Coldn't fount Access Token");
+        }
     }
-
+  
 }
 
 - (void)didReceiveMemoryWarning {

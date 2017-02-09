@@ -11,6 +11,8 @@
 		781337801E4A5AE0002A9487 /* TTLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7813377E1E4A5AE0002A9487 /* TTLoadingTableViewCell.xib */; };
 		781337841E4A810B002A9487 /* TTRandomPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 781337821E4A810B002A9487 /* TTRandomPhotoViewController.m */; };
 		781337851E4A810B002A9487 /* TTRandomPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 781337831E4A810B002A9487 /* TTRandomPhotoViewController.xib */; };
+		783C5C0B1E4C7251002E1193 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 783C5C0A1E4C7251002E1193 /* Reachability.m */; };
+		783C5C0E1E4C7276002E1193 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783C5C0D1E4C7276002E1193 /* SystemConfiguration.framework */; };
 		78561AA71E45EE4D008780DE /* TTPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78561AA61E45EE4D008780DE /* TTPhoto.m */; };
 		7856D4D31E40A10000614805 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4D21E40A10000614805 /* main.m */; };
 		7856D4D61E40A10000614805 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7856D4D51E40A10000614805 /* AppDelegate.m */; };
@@ -52,6 +54,9 @@
 		781337811E4A810B002A9487 /* TTRandomPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTRandomPhotoViewController.h; path = Assets.xcassets/TTRandomPhotoViewController.h; sourceTree = "<group>"; };
 		781337821E4A810B002A9487 /* TTRandomPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTRandomPhotoViewController.m; path = Assets.xcassets/TTRandomPhotoViewController.m; sourceTree = "<group>"; };
 		781337831E4A810B002A9487 /* TTRandomPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TTRandomPhotoViewController.xib; path = Assets.xcassets/TTRandomPhotoViewController.xib; sourceTree = "<group>"; };
+		783C5C091E4C7251002E1193 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		783C5C0A1E4C7251002E1193 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		783C5C0D1E4C7276002E1193 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		78561AA51E45EE4D008780DE /* TTPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTPhoto.h; sourceTree = "<group>"; };
 		78561AA61E45EE4D008780DE /* TTPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTPhoto.m; sourceTree = "<group>"; };
 		7856D4CE1E40A10000614805 /* TeamvoyTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamvoyTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783C5C0E1E4C7276002E1193 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +114,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		783C5C0C1E4C7276002E1193 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				783C5C0D1E4C7276002E1193 /* SystemConfiguration.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7856D4C51E40A0FF00614805 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +129,7 @@
 				7856D4EA1E40A10000614805 /* TeamvoyTaskTests */,
 				7856D4F51E40A10000614805 /* TeamvoyTaskUITests */,
 				7856D4CF1E40A10000614805 /* Products */,
+				783C5C0C1E4C7276002E1193 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,6 +162,8 @@
 				7856D4E21E40A10000614805 /* Info.plist */,
 				7856D4DD1E40A10000614805 /* Assets.xcassets */,
 				7856D4DF1E40A10000614805 /* LaunchScreen.storyboard */,
+				783C5C091E4C7251002E1193 /* Reachability.h */,
+				783C5C0A1E4C7251002E1193 /* Reachability.m */,
 				7856D4D21E40A10000614805 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -362,6 +379,7 @@
 				7856D4D31E40A10000614805 /* main.m in Sources */,
 				78561AA71E45EE4D008780DE /* TTPhoto.m in Sources */,
 				7813377F1E4A5AE0002A9487 /* TTLoadingTableViewCell.m in Sources */,
+				783C5C0B1E4C7251002E1193 /* Reachability.m in Sources */,
 				7856D5171E40DCDA00614805 /* TTUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
