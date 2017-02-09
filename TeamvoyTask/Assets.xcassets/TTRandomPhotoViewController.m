@@ -79,10 +79,13 @@
     
     if ([sender.titleLabel.text isEqualToString:@"Like"]) {
          [sender setTitle:@"Unlike" forState:UIControlStateNormal];
-        self.likes.text = [NSString stringWithFormat:@"Total likes %ld", self.tmpLikes+1];
+        self.tmpLikes++;
+        self.likes.text = [NSString stringWithFormat:@"Likes %ld", self.tmpLikes];
     } else if ([sender.currentTitle isEqualToString:@"Unlike"]) {
          [sender setTitle:@"Like" forState:UIControlStateNormal];
-        self.likes.text = [NSString stringWithFormat:@"Total likes %ld", self.tmpLikes-1];
+        self.tmpLikes--;
+        self.likes.text = [NSString stringWithFormat:@"Likes %ld", self.tmpLikes
+                           ];
     }
     
 }
@@ -102,7 +105,7 @@
     /*BUTTON*/
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                    style:UIBarButtonItemStyleDone target:self action:@selector(backToFeed:)];
-    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"Title"];
+    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"Random photo"];
     item.rightBarButtonItem = leftButton;
     item.hidesBackButton = YES;
     [newNavBar pushNavigationItem:item animated:NO];

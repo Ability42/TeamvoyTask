@@ -214,10 +214,12 @@
     TTPhoto *photoObj = [self.currentPhotos objectAtIndex:sender.tag];
     
     if ([sender.currentTitle isEqualToString:@"Like"]) {
-        customCell.totalLikes.text = [NSString stringWithFormat:@"Total likes %ld", photoObj.amountOfLikes+1];
+        photoObj.amountOfLikes++;
+        customCell.totalLikes.text = [NSString stringWithFormat:@"Likes %ld", photoObj.amountOfLikes];
         [sender setTitle:@"Unlike" forState:UIControlStateNormal];
     } else {
-        customCell.totalLikes.text = [NSString stringWithFormat:@"Total likes %ld", photoObj.amountOfLikes-1];
+        photoObj.amountOfLikes--;
+        customCell.totalLikes.text = [NSString stringWithFormat:@"Likes %ld", photoObj.amountOfLikes];
         [sender setTitle:@"Like" forState:UIControlStateNormal];
     }
     
@@ -263,7 +265,7 @@
         
         cell.cellPhotoID = tmpPhoto.photoID;
         cell.photoOwnerLabel.text = tmpPhoto.owner.name;
-        cell.totalLikes.text = [NSString stringWithFormat:@"Total likes: %ld",(long)tmpPhoto.amountOfLikes];
+        cell.totalLikes.text = [NSString stringWithFormat:@"Likes: %ld",(long)tmpPhoto.amountOfLikes];
         cell.photo.image = tmpPhoto.image;
         cell.photoOwnerImage.image = tmpPhoto.owner.image;
         [cell.likeButton addTarget:self
