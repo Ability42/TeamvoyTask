@@ -17,3 +17,8 @@ Once you have added the .h/m files to your project, simply:
 
 Repo with Reachibility located [-->HERE<--](https://github.com/tonymillion/Reachability)
 
+
+TODO: 
+* make constrains
+* add activity undicator when needed
+* checkout operations on threads
